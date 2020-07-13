@@ -1,4 +1,4 @@
-package ru.itis.java_lab;
+package com.github.javalab.javaiaas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
