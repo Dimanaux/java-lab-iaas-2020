@@ -1,7 +1,9 @@
 package com.github.javalab.javaiaas.security.util;
 
+import com.github.javalab.javaiaas.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,7 +53,15 @@ public class JwtTokenUtil implements Serializable, AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse response,
-                         AuthenticationException e) throws IOException, ServletException {
+                         AuthenticationException e) throws IOException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+    }
+
+    public String createToken(User user) {
+        return Jwts.builder()
+                .claim("login", user.getLogin())
+                .claim("id", user.getId())
+                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .compact();
     }
 }

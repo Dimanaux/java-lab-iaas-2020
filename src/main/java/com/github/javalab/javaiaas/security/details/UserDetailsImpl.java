@@ -23,7 +23,7 @@ public class UserDetailsImpl implements UserDetails, UserDetailsService {
     private String token;
     private UsersRepository usersRepository;
 
-    UserDetailsImpl(User user) {
+    private UserDetailsImpl(User user) {
         this.user = user;
     }
 

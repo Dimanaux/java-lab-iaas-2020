@@ -23,10 +23,6 @@ public class JwtAuthenticationFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
-
-    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String headerValue = request.getHeader(AUTH_HEADER);
@@ -37,9 +33,5 @@ public class JwtAuthenticationFilter implements Filter {
             authentication.setAuthenticated(false);
         }
         filterChain.doFilter(servletRequest, servletResponse);
-    }
-
-    @Override
-    public void destroy() {
     }
 }

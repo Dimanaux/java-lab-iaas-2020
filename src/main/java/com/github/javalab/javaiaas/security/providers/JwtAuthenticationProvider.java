@@ -1,13 +1,13 @@
 package com.github.javalab.javaiaas.security.providers;
 
+import com.github.javalab.javaiaas.security.auth.JwtAuthentication;
+import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-import com.github.javalab.javaiaas.security.auth.JwtAuthentication;
-import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
 
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {

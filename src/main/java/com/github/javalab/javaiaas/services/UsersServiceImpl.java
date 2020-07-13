@@ -1,6 +1,7 @@
 package com.github.javalab.javaiaas.services;
 
 import com.github.javalab.javaiaas.models.User;
+import com.github.javalab.javaiaas.security.util.JwtTokenUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ public class UsersServiceImpl implements UsersService {
 
     private UsersRepository usersRepository;
     private PasswordEncoder passwordEncoder;
+    private JwtTokenUtil util;
 
     @Autowired
-    public UsersServiceImpl(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
+    public UsersServiceImpl(UsersRepository usersRepository, PasswordEncoder passwordEncoder, JwtTokenUtil util) {
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;
+        this.util = util;
     }
 
     @Value("${jwt.secret}")
@@ -46,7 +49,7 @@ public class UsersServiceImpl implements UsersService {
         if (userCandidate.isPresent()) {
             User user = userCandidate.get();
             if (BCrypt.checkpw(dto.getPassword(), user.getPassword())) {
-                tokenDto.setValue(createToken(user));
+                tokenDto.setValue(util.createToken(user));
                 tokenDto.setStatus("VALID");
             } else {
                 tokenDto.setValue("Incorrect password");
@@ -58,13 +61,4 @@ public class UsersServiceImpl implements UsersService {
         }
         return tokenDto;
     }
-
-    private String createToken(User user) {
-        return Jwts.builder()
-                .claim("login", user.getLogin())
-                .claim("id", user.getId())
-                .signWith(SignatureAlgorithm.HS512, secretKey)
-                .compact();
-    }
-
 }
