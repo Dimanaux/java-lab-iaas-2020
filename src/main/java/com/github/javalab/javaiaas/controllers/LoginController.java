@@ -1,19 +1,20 @@
 package com.github.javalab.javaiaas.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.javalab.javaiaas.dtos.TokenDto;
+import com.github.javalab.javaiaas.dtos.UserDto;
+import com.github.javalab.javaiaas.services.UsersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.github.javalab.javaiaas.dtos.TokenDto;
-import com.github.javalab.javaiaas.dtos.UserDto;
-import com.github.javalab.javaiaas.services.UsersService;
 
 @RestController
 public class LoginController {
+    private final UsersService usersService;
 
-    @Autowired
-    private UsersService usersService;
+    public LoginController(UsersService usersService) {
+        this.usersService = usersService;
+    }
 
     @PostMapping("/login")
     private ResponseEntity<?> login(@RequestBody UserDto userDto) {

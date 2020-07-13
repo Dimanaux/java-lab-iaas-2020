@@ -1,18 +1,19 @@
 package com.github.javalab.javaiaas.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.javalab.javaiaas.dtos.UserDto;
+import com.github.javalab.javaiaas.services.UsersService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.github.javalab.javaiaas.dtos.UserDto;
-import com.github.javalab.javaiaas.services.UsersService;
 
 @RestController
 public class SignUpController {
+    private final UsersService usersService;
 
-    @Autowired
-    private UsersService usersService;
+    public SignUpController(UsersService usersService) {
+        this.usersService = usersService;
+    }
 
     @PostMapping("/signUp")
     public ResponseEntity<?> signUp(@RequestBody UserDto dto) {
