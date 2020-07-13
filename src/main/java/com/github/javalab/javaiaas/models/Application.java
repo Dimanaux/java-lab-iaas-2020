@@ -1,4 +1,4 @@
-package ru.itis.java_lab.models;
+package com.github.javalab.javaiaas.models;
 
 
 import lombok.Builder;
