@@ -15,7 +15,7 @@ public class SignUpController {
     private UsersService usersService;
 
     @PostMapping("/signUp")
-    public ResponseEntity<?> signUp(@RequestBody UserDto dto) {
+    public ResponseEntity<?> signUp(@RequestBody final UserDto dto) {
         usersService.signUp(dto);
         return ResponseEntity.ok("Successfully added user");
     }

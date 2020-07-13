@@ -22,15 +22,15 @@ public class UsersServiceImpl implements UsersService {
     private PasswordEncoder passwordEncoder;
     private JwtTokenUtil util;
 
+    @Value("${jwt.secret}")
+    private String secretKey;
+
     @Autowired
     public UsersServiceImpl(UsersRepository usersRepository, PasswordEncoder passwordEncoder, JwtTokenUtil util) {
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;
         this.util = util;
     }
-
-    @Value("${jwt.secret}")
-    private String secretKey;
 
     @Override
     public void signUp(UserDto dto) {

@@ -16,7 +16,7 @@ public class LoginController {
     private UsersService usersService;
 
     @PostMapping("/login")
-    private ResponseEntity<?> login(@RequestBody UserDto userDto) {
+    private ResponseEntity<?> login(@RequestBody final UserDto userDto) {
         TokenDto token = usersService.signIn(userDto);
         if(token.getStatus().equals("INVALID")) {
             return ResponseEntity.badRequest().body("Invalid token");
