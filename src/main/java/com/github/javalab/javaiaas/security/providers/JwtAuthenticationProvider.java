@@ -11,8 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
-
-    private UserDetailsImpl service;
+    private final UserDetailsImpl service;
 
     @Autowired
     public JwtAuthenticationProvider(UserDetailsImpl service) {
@@ -24,8 +23,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         JwtAuthentication jwtAuthentication
                 = (JwtAuthentication) authentication;
         UserDetailsImpl userDetails = (UserDetailsImpl) service.loadUserByUsername(jwtAuthentication.getLogin());
-        userDetails.setToken(jwtAuthentication.getToken());
         if (userDetails != null) {
+            userDetails.setToken(jwtAuthentication.getToken());
             jwtAuthentication.setUserDetails(userDetails);
             jwtAuthentication.setAuthenticated(true);
         } else {

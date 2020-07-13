@@ -13,8 +13,8 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter implements Filter {
     private final static String AUTH_HEADER = "Authorization";
-    private JwtAuthenticationProvider provider;
-    private JwtAuthentication authentication;
+    private final JwtAuthenticationProvider provider;
+    private final JwtAuthentication authentication;
 
     @Autowired
     public JwtAuthenticationFilter(JwtAuthenticationProvider provider, JwtAuthentication authentication) {
