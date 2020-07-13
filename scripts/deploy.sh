@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+cd ..
 mvn clean package
 
 echo 'Starting server...'
