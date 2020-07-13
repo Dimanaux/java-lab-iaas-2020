@@ -1,23 +1,19 @@
 package com.github.javalab.javaiaas.services;
 
+import com.github.javalab.javaiaas.dtos.TokenDto;
+import com.github.javalab.javaiaas.dtos.UserDto;
 import com.github.javalab.javaiaas.models.User;
+import com.github.javalab.javaiaas.repositories.UsersRepository;
 import com.github.javalab.javaiaas.security.util.JwtTokenUtil;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.github.javalab.javaiaas.dtos.TokenDto;
-import com.github.javalab.javaiaas.dtos.UserDto;
-import com.github.javalab.javaiaas.repositories.UsersRepository;
 
 import java.util.Optional;
 
 @Service
 public class UsersServiceImpl implements UsersService {
-
     private UsersRepository usersRepository;
     private PasswordEncoder passwordEncoder;
     private JwtTokenUtil util;

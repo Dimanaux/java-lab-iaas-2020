@@ -18,7 +18,6 @@ import java.util.Optional;
 @Data
 @Component
 public class UserDetailsImpl implements UserDetails, UserDetailsService {
-
     private User user;
     private String token;
     private UsersRepository usersRepository;
