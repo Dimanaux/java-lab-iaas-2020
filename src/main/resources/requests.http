@@ -3,7 +3,10 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{     "login": "aina",     "password": "aina" }
+{
+  "login": "aina",
+  "password": "aina"
+}
 
 ###
 
@@ -12,6 +15,9 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{     "login": "aina",     "password": "aina" }
+{
+  "login": "aina",
+  "password": "aina"
+}
 
 ###
