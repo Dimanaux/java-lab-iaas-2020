@@ -1,7 +1,7 @@
-package ru.itis.java_lab.repositories;
+package com.github.javalab.javaiaas.repositories;
 
+import com.github.javalab.javaiaas.models.Application;
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.itis.java_lab.models.Application;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 }
