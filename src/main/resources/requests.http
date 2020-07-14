@@ -21,3 +21,30 @@ Content-Type: application/json
 }
 
 ###
+
+GET http://localhost:8080/api/application?id=1
+
+###
+
+GET http://localhost:8080/api/application?gitUrl="dsad"
+
+###
+
+GET http://localhost:8080/api/application?ownerName="aina"
+
+###
+
+POST http://localhost:8080/api/application
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "gitUrl": "a12312",
+  "ownerName": "aina"
+}
+
+###
+
+
+
