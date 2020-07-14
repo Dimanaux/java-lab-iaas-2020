@@ -18,19 +18,19 @@ public class MainApplicationController {
     @Autowired
     private WorkService service;
 
-    @GetMapping("/application")
+    @GetMapping("/application/id")
     public ResponseEntity<?> get(@RequestParam final Long id) throws NotFoundException {
         Application application = service.findAppById(id);
         return ResponseEntity.ok(application);
     }
 
-    @GetMapping("/application")
+    @GetMapping("/application/gitUrl")
     public ResponseEntity<?> getByUrl(@RequestParam final String gitUrl) {
         List<Application> applications = service.findAllAppByGitUrl(gitUrl);
         return ResponseEntity.ok(applications);
     }
 
-    @GetMapping("/application")
+    @GetMapping("/application/ownerName")
     public ResponseEntity<?> getByOwnerName(@RequestParam final String ownerName) {
         List<Application> applications = service.findAllAppByOwnerName(ownerName);
         return ResponseEntity.ok(applications);

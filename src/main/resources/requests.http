@@ -22,15 +22,15 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/api/application?id=1
+GET http://localhost:8080/api/application/id?id=1
 
 ###
 
-GET http://localhost:8080/api/application?gitUrl="dsad"
+GET http://localhost:8080/api/application/gitUrl?gitUrl="dsad"
 
 ###
 
-GET http://localhost:8080/api/application?ownerName="aina"
+GET http://localhost:8080/api/application/ownerName?ownerName="aina"
 
 ###
 
