@@ -4,6 +4,6 @@ import com.github.javalab.javaiaas.dtos.TokenDto;
 import com.github.javalab.javaiaas.dtos.UserDto;
 
 public interface UsersService {
-    void signUp(UserDto dto);
+    boolean signUp(UserDto dto);
     TokenDto signIn(UserDto dto);
 }

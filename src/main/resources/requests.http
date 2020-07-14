@@ -21,3 +21,16 @@ Content-Type: application/json
 }
 
 ###
+###
+
+POST http://localhost:8080/applications
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6Mn0.rSg3ApC0Jiol0PQ0k3socqjAtR5c6Y4IXemafmNXyLUOEXeSinSpJC0LgJy3QKzYuT0xovp2nfUMvBaPM-M3mg
+
+{
+  "gitUrl": "https://github.com/Dimanaux/java-lab-iaas-2020.git"
+}
+
+###

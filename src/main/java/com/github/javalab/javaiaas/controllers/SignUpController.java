@@ -17,7 +17,10 @@ public class SignUpController {
 
     @PostMapping("/signUp")
     public ResponseEntity<?> signUp(@RequestBody UserDto dto) {
-        usersService.signUp(dto);
-        return ResponseEntity.ok("Successfully added user");
+        if (usersService.signUp(dto)) {
+            return ResponseEntity.ok("Successfully added user");
+        } else {
+            return ResponseEntity.badRequest().body("Login already taken.");
+        }
     }
 }

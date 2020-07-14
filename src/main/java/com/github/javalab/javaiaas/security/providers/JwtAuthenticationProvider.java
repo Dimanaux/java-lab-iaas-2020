@@ -20,8 +20,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        JwtAuthentication jwtAuthentication
-                = (JwtAuthentication) authentication;
+        JwtAuthentication jwtAuthentication = (JwtAuthentication) authentication;
         UserDetailsImpl userDetails = (UserDetailsImpl) service.loadUserByUsername(jwtAuthentication.getLogin());
         if (userDetails != null) {
             userDetails.setToken(jwtAuthentication.getToken());

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,4 +21,12 @@ public class User {
     private Long id;
     private String login;
     private String password;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Application> applications = new ArrayList<>();
+
+    public List<Application> getApplications() {
+        return applications;
+    }
 }

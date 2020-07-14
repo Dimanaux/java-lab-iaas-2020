@@ -26,13 +26,18 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void signUp(UserDto dto) {
+    public boolean signUp(UserDto dto) {
+        Optional<User> sameLoginUser = usersRepository.findByLogin(dto.getLogin());
+        if (sameLoginUser.isPresent()) {
+            return false;
+        }
         String hashPassword = passwordEncoder.encode(dto.getPassword());
         User newUser = User.builder()
                 .login(dto.getLogin())
                 .password(hashPassword)
                 .build();
         usersRepository.save(newUser);
+        return true;
     }
 
     @Override

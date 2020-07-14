@@ -76,4 +76,8 @@ public class UserDetailsImpl implements UserDetails, UserDetailsService {
         }
         return new UserDetailsImpl(user.get());
     }
+
+    public User getUser() {
+        return user;
+    }
 }
