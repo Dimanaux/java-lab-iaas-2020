@@ -26,11 +26,11 @@ GET http://localhost:8080/api/application/id?id=1
 
 ###
 
-GET http://localhost:8080/api/application/gitUrl?gitUrl="dsad"
+GET http://localhost:8080/api/application/gitUrl?gitUrl=dsad
 
 ###
 
-GET http://localhost:8080/api/application/ownerName?ownerName="aina"
+GET http://localhost:8080/api/application/ownerName?ownerName=aina
 
 ###
 
