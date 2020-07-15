@@ -2,11 +2,13 @@ package com.github.javalab.javaiaas.controllers;
 
 
 import com.github.javalab.javaiaas.models.Application;
+import com.github.javalab.javaiaas.models.User;
+import com.github.javalab.javaiaas.services.UsersService;
 import com.github.javalab.javaiaas.services.WorkService;
 import javassist.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +17,13 @@ import java.util.List;
 @RequestMapping("/api")
 public class MainApplicationController {
 
-    @Autowired
-    private WorkService service;
+    private final WorkService service;
+    private final UsersService usersService;
+
+    public MainApplicationController(WorkService service, UsersService usersService) {
+        this.service = service;
+        this.usersService = usersService;
+    }
 
     @GetMapping("/application/id")
     public ResponseEntity<?> get(@RequestParam final Long id) throws NotFoundException {
@@ -30,21 +37,21 @@ public class MainApplicationController {
         return ResponseEntity.ok(applications);
     }
 
-    @GetMapping("/application/ownerName")
-    public ResponseEntity<?> getByOwnerName(@RequestParam final String ownerName) {
-        List<Application> applications = service.findAllAppByOwnerName(ownerName);
+    @GetMapping("/application/userName")
+    public ResponseEntity<?> getByUserName(@RequestParam final String userName, Authentication authentication) {
+        List<Application> applications = service.findAllByUserName(userName, authentication);
         return ResponseEntity.ok(applications);
     }
 
     @PostMapping("/application")
-    public ResponseEntity<?> create(@RequestBody final Application application){
+    public ResponseEntity<?> create(@RequestBody final Application application) {
         service.addApp(application);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/application")
-    public ResponseEntity<?> update(@RequestBody final Application application) throws NotFoundException {
-        service.updateApp(application);
+    public ResponseEntity<?> update(@RequestBody final Application application, Authentication authentication) throws NotFoundException {
+        service.updateApp(application, authentication);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

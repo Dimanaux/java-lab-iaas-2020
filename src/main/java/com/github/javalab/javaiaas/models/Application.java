@@ -1,9 +1,9 @@
 package com.github.javalab.javaiaas.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 
@@ -18,5 +18,10 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String gitUrl;
-    private String ownerName;
+
+    @ManyToOne
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -2,9 +2,10 @@ package com.github.javalab.javaiaas.services;
 
 
 import com.github.javalab.javaiaas.models.Application;
+import com.github.javalab.javaiaas.models.User;
 import com.github.javalab.javaiaas.repositories.ApplicationRepository;
 import javassist.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,15 +14,21 @@ import java.util.Optional;
 @Service
 public class WorkService {
 
-    @Autowired
-    private ApplicationRepository repository;
+    private final ApplicationRepository repository;
+    private final UsersService usersService;
+
+    public WorkService(ApplicationRepository repository, UsersService usersService) {
+        this.repository = repository;
+        this.usersService = usersService;
+    }
 
     public void addApp(Application application) {
         repository.save(application);
     }
 
-    public List<Application> findAllAppByOwnerName(String ownerName) {
-        return repository.findAllByOwnerName(ownerName);
+    public List<Application> findAllByUserName(String userName, Authentication authentication) {
+        User user = usersService.getCurrentUser(authentication);
+        return user.getApplications();
     }
 
     public List<Application> findAllAppByGitUrl(String gitUrl) {
@@ -34,10 +41,11 @@ public class WorkService {
                 new NotFoundException("Application with id " + id + " not found"));
     }
 
-    public void updateApp(Application application) throws NotFoundException {
+    public void updateApp(Application application, Authentication authentication) throws NotFoundException {
             Application app = repository.findById(application.getId()).orElseThrow(() ->
                     new NotFoundException("Application with id " + application.getId() + " not found"));
-            app.setOwnerName(application.getOwnerName());
+            User user = usersService.getCurrentUser(authentication);
+            app.setUser(user);
             app.setGitUrl(application.getGitUrl());
             repository.save(app);
     }
