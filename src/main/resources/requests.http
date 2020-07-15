@@ -1,3 +1,5 @@
+### Create an account, register
+
 POST http://localhost:8080/signUp
 Accept: */*
 Cache-Control: no-cache
@@ -8,7 +10,7 @@ Content-Type: application/json
   "password": "aina"
 }
 
-###
+### Authenticate, get token
 
 POST http://localhost:8080/login
 Accept: */*
@@ -20,34 +22,44 @@ Content-Type: application/json
   "password": "aina"
 }
 
-###
+### Show all applications
 
-GET http://localhost:8080/api/application/id?id=1
+GET http://localhost:8080/applications
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
 
-###
+### Create an application
 
-GET http://localhost:8080/api/application/gitUrl?gitUrl=dsad
-
-###
-
-GET http://localhost:8080/api/application/userName?userName=aina
+POST http://localhost:8080/applications
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
-###
 
-POST http://localhost:8080/api/application
+{
+  "gitUrl": "https://github.com/Dimanaux/java-lab-iaas-2020.git"
+}
+
+### Get application's data
+
+GET http://localhost:8080/applications/1
+Accept: */*
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
+
+### NOT SUPPORTED YET
+
+PUT http://localhost:8080/applications/1
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
 
 {
-  "gitUrl": "a12312",
-  "ownerName": "aina"
+  "_comment": "NOT SUPPORTED YET"
 }
 
+### Destroy application
+
+DELETE http://localhost:8080/applications/1
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
+
 ###
-
-
-

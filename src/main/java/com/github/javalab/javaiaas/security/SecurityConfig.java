@@ -6,7 +6,6 @@ import com.github.javalab.javaiaas.security.providers.JwtAuthenticationProvider;
 import com.github.javalab.javaiaas.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-@ComponentScan("com.github.javalab.javaiaas")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenUtil util;
     private final UserDetailsImpl service;

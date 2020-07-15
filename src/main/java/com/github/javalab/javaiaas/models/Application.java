@@ -20,6 +20,7 @@ public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String gitUrl;
 
     @ManyToOne
