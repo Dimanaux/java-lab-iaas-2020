@@ -1,5 +1,6 @@
 package com.github.javalab.javaiaas;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -12,5 +13,13 @@ public class Configuration {
     @Bean
     public ExecutorService executorService() {
         return Executors.newFixedThreadPool(8);
+    }
+
+    @Autowired
+    private ExecutorService executorService;
+
+    @Bean(value = "dockerImagesFactory", destroyMethod = "destroy")
+    public DockerImagesFactory dockerImagesFactory() {
+        return new DockerImagesFactory(executorService);
     }
 }

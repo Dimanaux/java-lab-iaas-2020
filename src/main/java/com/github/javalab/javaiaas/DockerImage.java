@@ -23,6 +23,11 @@ class DockerImage {
         processBuilder.redirectErrorStream(true);
     }
 
+    public DockerImage withEnv(String key, String value) {
+        processBuilder.environment().put(key, value);
+        return this;
+    }
+
     public void run() throws IOException {
         process = processBuilder.start();
         output = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -52,6 +57,12 @@ class DockerImage {
             return output.readLine();
         } catch (IOException e) {
             return "Error: cannot read process output. " + e;
+        }
+    }
+
+    public void destroy() {
+        if (process.isAlive()) {
+            process.destroyForcibly();
         }
     }
 }
