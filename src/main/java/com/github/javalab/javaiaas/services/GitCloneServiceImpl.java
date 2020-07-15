@@ -14,10 +14,10 @@ import java.nio.file.Paths;
 @Service
 public class GitCloneServiceImpl implements GitCloneService {
 
-    private String dirName;
+    private final String dirName;
 
     @Autowired
-    public GitCloneServiceImpl(@Value("${dir.name}")String dirName) {
+    public GitCloneServiceImpl(@Value("${dir.name}") String dirName) {
         this.dirName = dirName;
     }
 

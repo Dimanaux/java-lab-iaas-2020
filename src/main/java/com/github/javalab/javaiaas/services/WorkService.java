@@ -42,12 +42,12 @@ public class WorkService {
     }
 
     public void updateApp(Application application, Authentication authentication) throws NotFoundException {
-            Application app = repository.findById(application.getId()).orElseThrow(() ->
-                    new NotFoundException("Application with id " + application.getId() + " not found"));
-            User user = usersService.getCurrentUser(authentication);
-            app.setUser(user);
-            app.setGitUrl(application.getGitUrl());
-            repository.save(app);
+        Application app = repository.findById(application.getId()).orElseThrow(() ->
+                new NotFoundException("Application with id " + application.getId() + " not found"));
+        User user = usersService.getCurrentUser(authentication);
+        app.setUser(user);
+        app.setGitUrl(application.getGitUrl());
+        repository.save(app);
     }
 
     public void removeApp(Long id) {

@@ -16,9 +16,9 @@ import java.util.Optional;
 
 @Service
 public class UsersServiceImpl implements UsersService {
-    private UsersRepository usersRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtTokenUtil util;
+    private final UsersRepository usersRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenUtil util;
 
     @Autowired
     public UsersServiceImpl(UsersRepository usersRepository, PasswordEncoder passwordEncoder, JwtTokenUtil util) {
@@ -59,6 +59,6 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public User getCurrentUser(Authentication authentication) {
-        return ((UserDetailsImpl)authentication.getPrincipal()).getUser();
+        return ((UserDetailsImpl) authentication.getPrincipal()).getUser();
     }
 }

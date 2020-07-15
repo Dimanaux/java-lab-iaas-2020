@@ -1,5 +1,9 @@
 package com.github.javalab.javaiaas.security;
 
+import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
+import com.github.javalab.javaiaas.security.filters.JwtAuthenticationFilter;
+import com.github.javalab.javaiaas.security.providers.JwtAuthenticationProvider;
+import com.github.javalab.javaiaas.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,20 +18,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
-import com.github.javalab.javaiaas.security.filters.JwtAuthenticationFilter;
-import com.github.javalab.javaiaas.security.providers.JwtAuthenticationProvider;
-import com.github.javalab.javaiaas.security.util.JwtTokenUtil;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @ComponentScan("com.github.javalab.javaiaas")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private JwtTokenUtil util;
-    private UserDetailsImpl service;
-    private JwtAuthenticationFilter filter;
-    private JwtAuthenticationProvider provider;
+    private final JwtTokenUtil util;
+    private final UserDetailsImpl service;
+    private final JwtAuthenticationFilter filter;
+    private final JwtAuthenticationProvider provider;
 
     @Autowired
     public SecurityConfig(JwtTokenUtil util, UserDetailsImpl service,

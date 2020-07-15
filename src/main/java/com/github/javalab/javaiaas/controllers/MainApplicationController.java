@@ -2,7 +2,6 @@ package com.github.javalab.javaiaas.controllers;
 
 
 import com.github.javalab.javaiaas.models.Application;
-import com.github.javalab.javaiaas.models.User;
 import com.github.javalab.javaiaas.services.UsersService;
 import com.github.javalab.javaiaas.services.WorkService;
 import javassist.NotFoundException;

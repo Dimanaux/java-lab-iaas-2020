@@ -1,5 +1,7 @@
 package com.github.javalab.javaiaas.security.filters;
 
+import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
+import com.github.javalab.javaiaas.security.util.JwtTokenUtil;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
-import com.github.javalab.javaiaas.security.util.JwtTokenUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

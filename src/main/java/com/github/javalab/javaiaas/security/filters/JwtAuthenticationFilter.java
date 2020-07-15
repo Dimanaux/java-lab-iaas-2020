@@ -1,10 +1,10 @@
 package com.github.javalab.javaiaas.security.filters;
 
+import com.github.javalab.javaiaas.security.auth.JwtAuthentication;
+import com.github.javalab.javaiaas.security.providers.JwtAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import com.github.javalab.javaiaas.security.auth.JwtAuthentication;
-import com.github.javalab.javaiaas.security.providers.JwtAuthenticationProvider;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

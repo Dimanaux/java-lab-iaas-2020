@@ -1,6 +1,7 @@
 package com.github.javalab.javaiaas.security.details;
 
 import com.github.javalab.javaiaas.models.User;
+import com.github.javalab.javaiaas.repositories.UsersRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import com.github.javalab.javaiaas.repositories.UsersRepository;
 
 import java.util.Collection;
 import java.util.Collections;
