@@ -15,11 +15,8 @@ public class Configuration {
         return Executors.newFixedThreadPool(8);
     }
 
-    @Autowired
-    private ExecutorService executorService;
-
     @Bean(value = "dockerImagesFactory", destroyMethod = "destroy")
-    public DockerImagesFactory dockerImagesFactory() {
+    public DockerImagesFactory dockerImagesFactory(@Autowired ExecutorService executorService) {
         return new DockerImagesFactory(executorService);
     }
 }
