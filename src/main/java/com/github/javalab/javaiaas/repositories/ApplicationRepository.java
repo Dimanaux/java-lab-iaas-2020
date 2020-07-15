@@ -9,7 +9,5 @@ import java.util.List;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
-    List<Application> findAllByOwnerName(String ownerName);
-
     List<Application> findAllByGitUrl(String gitUrl);
 }

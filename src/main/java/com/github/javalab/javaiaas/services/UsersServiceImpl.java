@@ -4,8 +4,10 @@ import com.github.javalab.javaiaas.dtos.TokenDto;
 import com.github.javalab.javaiaas.dtos.UserDto;
 import com.github.javalab.javaiaas.models.User;
 import com.github.javalab.javaiaas.repositories.UsersRepository;
+import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
 import com.github.javalab.javaiaas.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,5 +55,10 @@ public class UsersServiceImpl implements UsersService {
             tokenDto.setStatus("INVALID");
         }
         return tokenDto;
+    }
+
+    @Override
+    public User getCurrentUser(Authentication authentication) {
+        return ((UserDetailsImpl)authentication.getPrincipal()).getUser();
     }
 }
