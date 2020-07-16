@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
-class DockerImage {
+import static java.util.Arrays.asList;
+
+public class DockerImage {
     private final ExecutorService executorService;
     private final ProcessBuilder processBuilder;
     private final List<Consumer<String>> listeners = new ArrayList<>();
@@ -17,9 +20,11 @@ class DockerImage {
     private BufferedReader output;
     private PrintWriter input;
 
-    public DockerImage(ExecutorService executorService, String containerName) {
+    public DockerImage(ExecutorService executorService, String containerName, String... args) {
         this.executorService = executorService;
-        processBuilder = new ProcessBuilder("docker", "run", "-i", containerName);
+        List<String> command = asList("docker", "run", "-i", containerName);
+        command.addAll(asList(args));
+        processBuilder = new ProcessBuilder(command);
         processBuilder.redirectErrorStream(true);
     }
 

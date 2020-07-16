@@ -1,6 +1,5 @@
 package com.github.javalab.javaiaas.controllers;
 
-
 import com.github.javalab.javaiaas.models.Application;
 import com.github.javalab.javaiaas.models.User;
 import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
