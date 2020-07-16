@@ -40,7 +40,7 @@ public class PortService {
 
         for(int index = 0; index < 20; lastIndex++) {
             if (lastIndex > 9999) {
-                lastIndex = 1;
+                lastIndex = 1000;
             }
             if (ports.get(lastIndex)){
                 ports.put(lastIndex, false);
