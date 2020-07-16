@@ -6,7 +6,8 @@ import com.github.javalab.javaiaas.models.User;
 import org.springframework.security.core.Authentication;
 
 public interface UsersService {
-    void signUp(UserDto dto);
+    boolean signUp(UserDto dto);
+
     TokenDto signIn(UserDto dto);
 
     User getCurrentUser(Authentication authentication);

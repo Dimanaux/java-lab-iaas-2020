@@ -12,12 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class WorkService {
-
+public class ApplicationService {
     private final ApplicationRepository repository;
     private final UsersService usersService;
 
-    public WorkService(ApplicationRepository repository, UsersService usersService) {
+    public ApplicationService(ApplicationRepository repository, UsersService usersService) {
         this.repository = repository;
         this.usersService = usersService;
     }
@@ -41,13 +40,8 @@ public class WorkService {
                 new NotFoundException("Application with id " + id + " not found"));
     }
 
-    public void updateApp(Application application, Authentication authentication) throws NotFoundException {
-            Application app = repository.findById(application.getId()).orElseThrow(() ->
-                    new NotFoundException("Application with id " + application.getId() + " not found"));
-            User user = usersService.getCurrentUser(authentication);
-            app.setUser(user);
-            app.setGitUrl(application.getGitUrl());
-            repository.save(app);
+    public void updateApp(Application application) {
+        repository.save(application);
     }
 
     public void removeApp(Long id) {

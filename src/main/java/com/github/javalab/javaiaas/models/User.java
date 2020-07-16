@@ -25,6 +25,6 @@ public class User {
     @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "user_id")
-    private List<Application> applications = new ArrayList<>();
+    private final List<Application> applications = new ArrayList<>();
 
 }

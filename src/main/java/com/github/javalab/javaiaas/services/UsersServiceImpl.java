@@ -16,9 +16,9 @@ import java.util.Optional;
 
 @Service
 public class UsersServiceImpl implements UsersService {
-    private UsersRepository usersRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtTokenUtil util;
+    private final UsersRepository usersRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenUtil util;
 
     @Autowired
     public UsersServiceImpl(UsersRepository usersRepository, PasswordEncoder passwordEncoder, JwtTokenUtil util) {
@@ -28,13 +28,18 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void signUp(UserDto dto) {
+    public boolean signUp(UserDto dto) {
+        Optional<User> byLogin = usersRepository.findByLogin(dto.getLogin());
+        if (byLogin.isPresent()) {
+            return false;
+        }
         String hashPassword = passwordEncoder.encode(dto.getPassword());
         User newUser = User.builder()
                 .login(dto.getLogin())
                 .password(hashPassword)
                 .build();
         usersRepository.save(newUser);
+        return true;
     }
 
     @Override
@@ -59,6 +64,6 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public User getCurrentUser(Authentication authentication) {
-        return ((UserDetailsImpl)authentication.getPrincipal()).getUser();
+        return ((UserDetailsImpl) authentication.getPrincipal()).getUser();
     }
 }

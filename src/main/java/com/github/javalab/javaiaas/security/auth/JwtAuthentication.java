@@ -1,12 +1,12 @@
 package com.github.javalab.javaiaas.security.auth;
 
+import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -68,10 +68,6 @@ public class JwtAuthentication implements Authentication {
         this.userDetails = userDetails;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getLogin() {
         Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         return (String) body.get("login");
@@ -84,5 +80,9 @@ public class JwtAuthentication implements Authentication {
 
     public String getToken() {
         return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
