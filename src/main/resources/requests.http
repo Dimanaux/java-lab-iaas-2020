@@ -62,4 +62,14 @@ Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5
 DELETE http://localhost:8080/applications/1
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
 
+### Get free ports
+
+GET http://localhost:8080/api/ports
+Accept: application/json
+
+### Check port
+GET http://localhost:8080/api/port/1109
+Accept: application/json
+
 ###
+
