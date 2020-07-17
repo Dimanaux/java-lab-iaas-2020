@@ -34,9 +34,9 @@ public class PortService {
         }
     }
 
-    public ArrayList<String> getFreePorts(){
+    public ArrayList<Integer> getFreePorts(){
 
-        ArrayList<String> freePorts = new ArrayList<>();
+        ArrayList<Integer> freePorts = new ArrayList<>();
 
         for(int index = 0; index < 20; lastIndex++) {
             if (lastIndex > 65535) {
@@ -44,7 +44,7 @@ public class PortService {
             }
             if (pingHost(lastIndex)){
                 ports.put(lastIndex, false);
-                freePorts.add(Integer.toString(lastIndex));
+                freePorts.add(lastIndex);
                 index++;
             } else
                 ports.put(lastIndex, false);
