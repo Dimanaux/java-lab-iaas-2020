@@ -1,59 +1,33 @@
 package com.github.javalab.javaiaas.services;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class PortService {
+    private int lastCheckedPort = 1024;
 
-    public static HashMap<Integer, Boolean> ports = new HashMap<>();
+    public List<Integer> allocatePorts(int count) {
+        List<Integer> freePorts = new ArrayList<>(count);
 
-    @Value("${port.service.host.name}")
-    private String host;
-
-    @Value("${port.service.start}")
-    private int lastIndex;
-
-    @Value("${port.service.timeout}")
-    private int timeout;
-
-    public boolean pingHost(int port) {
-        try (Socket socket = new Socket()) {
-            socket.connect(new InetSocketAddress(host, port), timeout);
-            socket.close();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    public ArrayList<Integer> getFreePorts(){
-
-        ArrayList<Integer> freePorts = new ArrayList<>();
-
-        for(int index = 0; index < 20; lastIndex++) {
-            if (lastIndex > 65535) {
-                lastIndex = 1024;
+        while (freePorts.size() < count) {
+            if (!portTaken(lastCheckedPort)) {
+                freePorts.add(lastCheckedPort);
             }
-            if (pingHost(lastIndex)){
-                ports.put(lastIndex, false);
-                freePorts.add(lastIndex);
-                index++;
-            } else
-                ports.put(lastIndex, false);
+            lastCheckedPort++;
         }
         return freePorts;
     }
 
-    public ArrayList<Integer> getUsedPorts(){
-        ArrayList<Integer> usedPorts = new ArrayList<>(ports.keySet());
-        return usedPorts;
+    private static boolean portTaken(int port) {
+        try (Socket _socket = new Socket("localhost", port)) {
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 }

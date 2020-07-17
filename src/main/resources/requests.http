@@ -36,7 +36,8 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
 
 {
-  "gitUrl": "https://github.com/Dimanaux/java-lab-iaas-2020.git"
+  "gitUrl": "https://github.com/AinaArd/redis-simple-app.git",
+  "type": "docker-compose"
 }
 
 ### Get application's data
@@ -45,34 +46,16 @@ GET http://localhost:8080/applications/1
 Accept: */*
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
 
-### NOT SUPPORTED YET
+### Run application
 
-PUT http://localhost:8080/applications/1
+PUT http://localhost:8080/applications/2
 Accept: */*
 Cache-Control: no-cache
-Content-Type: application/json
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
-
-{
-  "_comment": "NOT SUPPORTED YET"
-}
 
 ### Destroy application
 
-DELETE http://localhost:8080/applications/1
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
-
-### Get free ports
-
-GET http://localhost:8080/ports
-Accept: application/json
-Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
-
-
-### Check port
-GET http://localhost:8080/port/8080
-Accept: application/json
+DELETE http://localhost:8080/applications/2
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
 
 ###
-
