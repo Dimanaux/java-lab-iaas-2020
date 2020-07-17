@@ -51,4 +51,9 @@ public class PortService {
         }
         return freePorts;
     }
+
+    public ArrayList<Integer> getUsedPorts(){
+        ArrayList<Integer> usedPorts = new ArrayList<>(ports.keySet());
+        return usedPorts;
+    }
 }
