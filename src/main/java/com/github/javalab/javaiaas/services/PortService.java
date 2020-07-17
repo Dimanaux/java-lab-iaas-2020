@@ -39,23 +39,16 @@ public class PortService {
         ArrayList<String> freePorts = new ArrayList<>();
 
         for(int index = 0; index < 20; lastIndex++) {
-            if (lastIndex > 9999) {
-                lastIndex = 1000;
+            if (lastIndex > 65535) {
+                lastIndex = 1024;
             }
-            if (ports.get(lastIndex)){
+            if (pingHost(lastIndex)){
                 ports.put(lastIndex, false);
                 freePorts.add(Integer.toString(lastIndex));
                 index++;
-            }
+            } else
+                ports.put(lastIndex, false);
         }
         return freePorts;
-    }
-
-    @Scheduled(fixedRate = 1000000)
-    public void checkPort(){
-        for (int i = 1; i <= 9999; i++){
-            boolean isFree = pingHost(i);
-            ports.put(i, isFree);
-        }
     }
 }

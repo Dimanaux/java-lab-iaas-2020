@@ -21,7 +21,7 @@ public class PortController {
 
     @GetMapping("/port/{number}")
     public ResponseEntity<?> check(@PathVariable("number") Long numberPort){
-        return ResponseEntity.ok(!portService.pingHost(numberPort.intValue()));
+        return ResponseEntity.ok(portService.pingHost(numberPort.intValue()));
     }
 
 }
