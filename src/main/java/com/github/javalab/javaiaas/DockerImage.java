@@ -1,9 +1,6 @@
 package com.github.javalab.javaiaas;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -73,5 +70,11 @@ public class DockerImage {
         if (process.isAlive()) {
             process.destroyForcibly();
         }
+    }
+
+    public void runApp(String port) throws IOException {
+        List<String> command = asList("PORT=" + port +  " docker-compose up --build");
+        processBuilder.command(command);
+        process = processBuilder.start();
     }
 }

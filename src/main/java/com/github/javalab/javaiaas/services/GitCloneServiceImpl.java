@@ -24,8 +24,8 @@ public class GitCloneServiceImpl implements GitCloneService {
     @Override
     public void clone(Application application) {
 
-        ProcessBuilder processBuilder = new ProcessBuilder();
         Path path = Paths.get(dirName);
+        Process p;
 
         if (!Files.exists(path)) {
             try {
@@ -35,17 +35,11 @@ public class GitCloneServiceImpl implements GitCloneService {
             }
         }
 
-        processBuilder.directory(new File(dirName));
-        StringBuilder command = new StringBuilder();
-        command.append("git clone ").append(application.getGitUrl());
-        processBuilder.command("sh", "-c", command.toString());
-
+        String command = "git clone " + application.getGitUrl() + " repos/";
         try {
-            Process process = processBuilder.start();
-            process.waitFor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+            p = Runtime.getRuntime().exec(command);
+            p.waitFor();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
 
