@@ -1,7 +1,6 @@
 package com.github.javalab.javaiaas.services;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -34,15 +33,15 @@ public class PortService {
         }
     }
 
-    public ArrayList<Integer> getFreePorts(){
+    public ArrayList<Integer> getFreePorts() {
 
         ArrayList<Integer> freePorts = new ArrayList<>();
 
-        for(int index = 0; index < 20; lastIndex++) {
+        for (int index = 0; index < 20; lastIndex++) {
             if (lastIndex > 65535) {
                 lastIndex = 1024;
             }
-            if (pingHost(lastIndex)){
+            if (pingHost(lastIndex)) {
                 ports.put(lastIndex, false);
                 freePorts.add(lastIndex);
                 index++;
@@ -52,7 +51,7 @@ public class PortService {
         return freePorts;
     }
 
-    public ArrayList<Integer> getUsedPorts(){
+    public ArrayList<Integer> getUsedPorts() {
         ArrayList<Integer> usedPorts = new ArrayList<>(ports.keySet());
         return usedPorts;
     }

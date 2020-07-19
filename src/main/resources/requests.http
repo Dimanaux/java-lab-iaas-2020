@@ -47,7 +47,7 @@ Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5
 
 ### NOT SUPPORTED YET
 
-PUT http://localhost:8080/applications/1
+PUT http://localhost:8080/appllications/3
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -59,7 +59,7 @@ Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5
 
 ### Destroy application
 
-DELETE http://localhost:8080/applications/1
+DELETE http://localhost:8080/applications/3
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
 
 ### Get free ports
@@ -75,4 +75,3 @@ Accept: application/json
 Authorization: eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbiI6ImFpbmEiLCJpZCI6MX0.tNUVLtXwKaH5x1whga7TQbuOpCEDAl3_T_V4v6Jm_9CAQBJc4X_GsEXzgU3BWwGOe2A8g81ji9XuvXreEMaEaQ
 
 ###
-
