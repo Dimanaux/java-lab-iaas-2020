@@ -22,7 +22,11 @@ public class DockerImage {
 
     public DockerImage(ExecutorService executorService, String containerName, String... args) {
         this.executorService = executorService;
-        List<String> command = asList("docker", "run", "-i", containerName);
+        List<String> command = asList(
+                "docker", "run", "-i",
+                "-v", "/var/run/docker.sock:/var/run/docker.sock",
+                containerName
+        );
         command.addAll(asList(args));
         processBuilder = new ProcessBuilder(command);
         processBuilder.redirectErrorStream(true);

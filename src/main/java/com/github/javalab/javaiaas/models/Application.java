@@ -22,6 +22,7 @@ public class Application {
     private Long id;
 
     private String gitUrl;
+    private String type;
 
     @ManyToOne
     @LazyCollection(LazyCollectionOption.FALSE)

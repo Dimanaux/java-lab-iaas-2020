@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/applications")
 public class ApplicationsController {
@@ -41,12 +43,12 @@ public class ApplicationsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(Authentication authentication,
-                                    @PathVariable Long id,
-                                    @RequestBody Application application) {
+    public ResponseEntity<?> run(Authentication authentication,
+                                 @PathVariable Long id,
+                                 @RequestBody Application application) throws IOException {
         authorize(authentication, id);
         application.setId(id);
-        service.updateApp(application);
+        service.runApp(application);
         return ResponseEntity.ok(application);
     }
 

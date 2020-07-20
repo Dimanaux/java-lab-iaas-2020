@@ -2,7 +2,6 @@ package com.github.javalab.javaiaas;
 
 import com.github.javalab.javaiaas.models.Application;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -16,9 +15,19 @@ public class DockerImagesFactory {
     }
 
     public DockerImage create(Application application) {
-        DockerImage dockerImage = new DockerImage(executorService, "docker:stable-git");
+        destroyImage(application);
+        DockerImage dockerImage = new DockerImage(executorService, "cosmoskey/dbuilder:latest");
+
         dockerImages.put(application.getId(), dockerImage);
         return dockerImage;
+    }
+
+    public void destroyImage(Application application) {
+        DockerImage runningImage = dockerImages.get(application.getId());
+        if (runningImage != null) {
+            runningImage.destroy();
+        }
+        dockerImages.remove(application.getId());
     }
 
     public void destroy() {
