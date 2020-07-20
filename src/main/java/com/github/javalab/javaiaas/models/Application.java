@@ -28,4 +28,6 @@ public class Application {
     @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
+
+    private String type;
 }
