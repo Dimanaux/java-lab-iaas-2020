@@ -1,19 +1,26 @@
 package com.github.javalab.javaiaas.controllers;
 
 import com.github.javalab.javaiaas.models.Application;
+import com.github.javalab.javaiaas.models.Instance;
 import com.github.javalab.javaiaas.models.User;
 import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
 import com.github.javalab.javaiaas.services.ApplicationService;
+import com.github.javalab.javaiaas.services.InstanceService;
 import javassist.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/applications")
 public class ApplicationsController {
     private final ApplicationService service;
+    @Autowired
+    private InstanceService instService;
 
     public ApplicationsController(ApplicationService service) {
         this.service = service;
@@ -22,6 +29,28 @@ public class ApplicationsController {
     @GetMapping
     public ResponseEntity<?> index(Authentication authentication) {
         return ResponseEntity.ok(currentUser(authentication).getApplications());
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<?> getInstances(Authentication authentication, @PathVariable("username") String username) {
+        return ResponseEntity.ok(instService.getAll(username));
+    }
+
+    @PostMapping("/copy")
+    public ResponseEntity<?> createCopy(Authentication authentication, @RequestBody Instance instance) throws IOException, InterruptedException {
+        return ResponseEntity.ok(instService.createCopy(instance));
+    }
+
+    @PutMapping("/stop/{id}")
+    public ResponseEntity<?> stopInstance(Authentication authentication, @PathVariable Long id) {
+        instService.stopInstance(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PutMapping("/start/{id}")
+    public ResponseEntity<?> startInstance(Authentication authentication, @PathVariable Long id) {
+        instService.startInstance(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
