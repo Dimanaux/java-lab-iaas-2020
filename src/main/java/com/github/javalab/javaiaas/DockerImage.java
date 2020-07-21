@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
@@ -22,7 +21,11 @@ public class DockerImage {
 
     public DockerImage(ExecutorService executorService, String containerName, String... args) {
         this.executorService = executorService;
-        List<String> command = asList("docker", "run", "-i", containerName);
+        List<String> command = asList(
+                "docker", "run", "-i",
+                "-v", "/var/run/docker.sock:/var/run/docker.sock",
+                containerName
+        );
         command.addAll(asList(args));
         processBuilder = new ProcessBuilder(command);
         processBuilder.redirectErrorStream(true);
@@ -66,6 +69,7 @@ public class DockerImage {
     }
 
     public void destroy() {
+        send("\\cc");
         if (process.isAlive()) {
             process.destroyForcibly();
         }
