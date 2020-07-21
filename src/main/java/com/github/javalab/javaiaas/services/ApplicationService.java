@@ -58,4 +58,8 @@ public class ApplicationService {
     public void destroyImage(Application application) {
         dockerImagesFactory.destroyImage(application);
     }
+
+    public List<Application> findAppByUserId(Long id) {
+        return repository.findAllByUserId(id);
+    }
 }

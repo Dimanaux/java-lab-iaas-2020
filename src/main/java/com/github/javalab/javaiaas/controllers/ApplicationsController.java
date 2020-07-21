@@ -6,6 +6,7 @@ import com.github.javalab.javaiaas.models.User;
 import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
 import com.github.javalab.javaiaas.services.ApplicationService;
 import com.github.javalab.javaiaas.services.InstanceService;
+import com.github.javalab.javaiaas.services.UsersService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,11 +34,6 @@ public class ApplicationsController {
     @GetMapping
     public ResponseEntity<?> index(Authentication authentication) {
         return ResponseEntity.ok(currentUser(authentication).getApplications());
-    }
-
-    @GetMapping("/{username}")
-    public ResponseEntity<?> getInstances(Authentication authentication, @PathVariable("username") String username) {
-        return ResponseEntity.ok(instService.getAll(username));
     }
 
     @PostMapping("/copy")
@@ -57,8 +55,9 @@ public class ApplicationsController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(Authentication authentication,
-                                  @PathVariable Long id) {
-        Application application = authorize(authentication, id);
+                                  @PathVariable Long id)  {
+        authorize(authentication, id);
+        List<Application> application = service.findAppByUserId(id);
         return ResponseEntity.ok(application);
     }
 
@@ -90,17 +89,9 @@ public class ApplicationsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private Application authorize(Authentication authentication,
-                                  Long applicationId) {
-        try {
-            Application application = service.findAppById(applicationId);
-            if (!currentUser(authentication).getId()
-                    .equals(application.getUser().getId())) {
-                throw new HttpErrors.Unauthorized();
-            }
-            return application;
-        } catch (NotFoundException e) {
-            throw new HttpErrors.NotFound();
+    private void authorize(Authentication authentication, Long userId) {
+        if (!currentUser(authentication).getId().equals(userId)) {
+            throw new HttpErrors.Unauthorized();
         }
     }
 
@@ -114,4 +105,3 @@ public class ApplicationsController {
         return map;
     }
 }
-

@@ -50,6 +50,7 @@ public class UsersServiceImpl implements UsersService {
             User user = userCandidate.get();
             if (BCrypt.checkpw(dto.getPassword(), user.getPassword())) {
                 tokenDto.setValue(util.createToken(user));
+                tokenDto.setUserId(userCandidate.get().getId());
                 tokenDto.setStatus("VALID");
             } else {
                 tokenDto.setValue("Incorrect password");
@@ -61,6 +62,7 @@ public class UsersServiceImpl implements UsersService {
         }
         return tokenDto;
     }
+
 
     @Override
     public User getCurrentUser(Authentication authentication) {
