@@ -24,14 +24,14 @@ public class JwtAuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        HttpServletRequest request = (HttpServletRequest) servletRequest;
-//        String headerValue = request.getHeader(AUTH_HEADER);
-//        if (headerValue != null) {
-//            authentication.setToken(headerValue);
-//            SecurityContextHolder.getContext().setAuthentication(provider.authenticate(authentication));
-//        } else {
-//            authentication.setAuthenticated(false);
-//        }
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String headerValue = request.getHeader(AUTH_HEADER);
+        if (headerValue != null) {
+            authentication.setToken(headerValue);
+            SecurityContextHolder.getContext().setAuthentication(provider.authenticate(authentication));
+        } else {
+            authentication.setAuthenticated(false);
+        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

@@ -56,9 +56,9 @@ public class ApplicationsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> show(
+    public ResponseEntity<?> show(Authentication authentication,
                                   @PathVariable Long id) throws NotFoundException {
-//        authorize(authentication, id);
+        authorize(authentication, id);
         List<Application> application = service.findAppByUserId(id);
         return ResponseEntity.ok(application);
     }
