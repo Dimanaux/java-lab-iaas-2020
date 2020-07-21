@@ -6,6 +6,7 @@ import com.github.javalab.javaiaas.models.User;
 import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
 import com.github.javalab.javaiaas.services.ApplicationService;
 import com.github.javalab.javaiaas.services.InstanceService;
+import com.github.javalab.javaiaas.services.UsersService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/applications")
@@ -32,11 +34,6 @@ public class ApplicationsController {
         return ResponseEntity.ok(currentUser(authentication).getApplications());
     }
 
-//    @GetMapping("/{username}")
-//    public ResponseEntity<?> getInstances(@PathVariable("username") String username) {
-//        System.out.println("kek");
-//        return ResponseEntity.ok(instService.getAll(username));
-//    }
 
     @PostMapping("/copy")
     public ResponseEntity<?> createCopy(Authentication authentication, @RequestBody Instance instance) throws IOException, InterruptedException {
@@ -57,7 +54,7 @@ public class ApplicationsController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(Authentication authentication,
-                                  @PathVariable Long id) throws NotFoundException {
+                                  @PathVariable Long id)  {
         authorize(authentication, id);
         List<Application> application = service.findAppByUserId(id);
         return ResponseEntity.ok(application);
@@ -87,14 +84,17 @@ public class ApplicationsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private void authorize(Authentication authentication, Long applicationId) {
-        try {
-            Application application = service.findAppById(applicationId);
-            if (!currentUser(authentication).getId().equals(application.getUser().getId())) {
-                throw new HttpErrors.Unauthorized();
-            }
-        } catch (NotFoundException e) {
-            throw new HttpErrors.NotFound();
+    private void authorize(Authentication authentication, Long userId) {
+//        try {
+//            Application application = service.findAppById(applicationId);
+//            if (!currentUser(authentication).getId().equals(userId)) {
+//                throw new HttpErrors.Unauthorized();
+//            }
+//        } catch (NotFoundException e) {
+//            throw new HttpErrors.NotFound();
+//        }
+        if (!currentUser(authentication).getId().equals(userId)) {
+            throw new HttpErrors.Unauthorized();
         }
     }
 
