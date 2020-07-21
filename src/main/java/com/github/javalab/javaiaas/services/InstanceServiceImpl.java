@@ -25,7 +25,7 @@ public class InstanceServiceImpl implements InstanceService {
 
     @Override
     public Instance createCopy(Instance instance) throws IOException, InterruptedException {
-        Integer freePort = portService.getFreePorts().get(0); // get free port
+        Integer freePort = portService.allocatePorts(1).get(0); // get free port
         Long newId = repository.findMaxId() + 1;
         directory = instance.getRepoName();
         //need to run docker dind with github project name: ( docker run --privileged -d --name=${repoName} docker:dind)
