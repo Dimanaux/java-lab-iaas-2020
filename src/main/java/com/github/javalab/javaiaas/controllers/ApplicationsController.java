@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/applications")
@@ -33,7 +35,6 @@ public class ApplicationsController {
     public ResponseEntity<?> index(Authentication authentication) {
         return ResponseEntity.ok(currentUser(authentication).getApplications());
     }
-
 
     @PostMapping("/copy")
     public ResponseEntity<?> createCopy(Authentication authentication, @RequestBody Instance instance) throws IOException, InterruptedException {
@@ -65,34 +66,30 @@ public class ApplicationsController {
                                     @RequestBody Application application) {
         application.setUser(currentUser(authentication));
         service.addApp(application);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(application);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(Authentication authentication,
-                                    @PathVariable Long id,
-                                    @RequestBody Application application) {
-        authorize(authentication, id);
-        application.setId(id);
-        service.updateApp(application);
-        return ResponseEntity.ok(application);
+    public ResponseEntity<?> run(Authentication authentication,
+                                 @PathVariable Long id) {
+        Application application = authorize(authentication, id);
+        try {
+            List<Integer> ports = service.runApp(application);
+            return ResponseEntity.ok(mapOf("ports", ports));
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body(mapOf("error", "couldn't start your app"));
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
-        service.removeApp(id);
+    public ResponseEntity<?> destroy(Authentication authentication,
+                                     @PathVariable final Long id) {
+        Application application = authorize(authentication, id);
+        service.destroyImage(application);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private void authorize(Authentication authentication, Long userId) {
-//        try {
-//            Application application = service.findAppById(applicationId);
-//            if (!currentUser(authentication).getId().equals(userId)) {
-//                throw new HttpErrors.Unauthorized();
-//            }
-//        } catch (NotFoundException e) {
-//            throw new HttpErrors.NotFound();
-//        }
         if (!currentUser(authentication).getId().equals(userId)) {
             throw new HttpErrors.Unauthorized();
         }
@@ -100,5 +97,11 @@ public class ApplicationsController {
 
     private User currentUser(Authentication authentication) {
         return ((UserDetailsImpl) authentication.getPrincipal()).getUser();
+    }
+
+    private static HashMap<String, ?> mapOf(String key, Object value) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(key, value);
+        return map;
     }
 }
