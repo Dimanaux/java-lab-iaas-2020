@@ -72,7 +72,7 @@ public class ApplicationsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> run(Authentication authentication,
+    public @ResponseBody ResponseEntity<?> run(Authentication authentication,
                                  @PathVariable Long id) {
         Application application = authorize(authentication, id);
         try {
@@ -83,19 +83,32 @@ public class ApplicationsController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> destroy(Authentication authentication,
-                                     @PathVariable final Long id) {
-        Application application = authorize(authentication, id);
-        service.destroyImage(application);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> destroy(Authentication authentication,
+//                                     @PathVariable final Long id) {
+//        Application application = authorize(authentication, id);
+//        service.destroyImage(application);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
-    private void authorize(Authentication authentication, Long userId) {
-        if (!currentUser(authentication).getId().equals(userId)) {
+//    private void authorize(Authentication authentication, Long userId) {
+//        if (!currentUser(authentication).getId().equals(userId)) {
+//            throw new HttpErrors.Unauthorized();
+//        }
+//    }
+private Application authorize(Authentication authentication,
+                              Long applicationId) {
+    try {
+        Application application = service.findAppById(applicationId);
+        if (!currentUser(authentication).getId()
+                .equals(application.getUser().getId())) {
             throw new HttpErrors.Unauthorized();
         }
+        return application;
+    } catch (NotFoundException e) {
+        throw new HttpErrors.NotFound();
     }
+}
 
     private User currentUser(Authentication authentication) {
         return ((UserDetailsImpl) authentication.getPrincipal()).getUser();
