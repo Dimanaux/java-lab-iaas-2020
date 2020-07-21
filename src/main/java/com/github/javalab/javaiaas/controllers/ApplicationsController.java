@@ -8,6 +8,7 @@ import com.github.javalab.javaiaas.services.ApplicationService;
 import com.github.javalab.javaiaas.services.InstanceService;
 import com.github.javalab.javaiaas.services.UsersService;
 import javassist.NotFoundException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,7 @@ public class ApplicationsController {
     @GetMapping("/{id}")
     public ResponseEntity<?> show(Authentication authentication,
                                   @PathVariable Long id)  {
+//        System.out.println(currentUser(authentication).getLogin());
         authorize(authentication, id);
         List<Application> application = service.findAppByUserId(id);
         return ResponseEntity.ok(application);
