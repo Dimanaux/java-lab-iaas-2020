@@ -47,4 +47,8 @@ public class ApplicationService {
     public void removeApp(Long id) {
         repository.deleteById(id);
     }
+
+    public List<Application> findAppByUserId(Long id) {
+        return repository.findAllByUserId(id);
+    }
 }

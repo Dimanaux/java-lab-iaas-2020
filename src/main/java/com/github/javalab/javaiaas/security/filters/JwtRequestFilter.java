@@ -33,22 +33,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        final String requestTokenHeader = request.getHeader("Authorization");
-        String username = null;
-        String jwtToken = null;
-        if (requestTokenHeader != null) {
-            jwtToken = requestTokenHeader;
-            try {
-                username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Unable to get JWT Token", e);
-            } catch (JwtException e) {
-                throw new JwtException("JWT Token has expired", e);
-            }
-        } else {
-            log.error("No JWT token in the request header");
-        }
-        setAuthAndDetails(username, jwtToken, request);
+//        final String requestTokenHeader = request.getHeader("Authorization");
+//        String username = null;
+//        String jwtToken = null;
+//        if (requestTokenHeader != null) {
+//            jwtToken = requestTokenHeader;
+//            try {
+//                username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+//            } catch (IllegalArgumentException e) {
+//                throw new IllegalArgumentException("Unable to get JWT Token", e);
+//            } catch (JwtException e) {
+//                throw new JwtException("JWT Token has expired", e);
+//            }
+//        } else {
+//            log.error("No JWT token in the request header");
+//        }
+//        setAuthAndDetails(username, jwtToken, request);
         chain.doFilter(request, response);
     }
 

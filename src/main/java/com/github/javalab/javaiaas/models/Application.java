@@ -9,6 +9,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,6 +24,11 @@ public class Application {
     private Long id;
 
     private String gitUrl;
+
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "appl_id")
+    private List<Instance> instance=new ArrayList<>();
 
     @ManyToOne
     @LazyCollection(LazyCollectionOption.FALSE)

@@ -23,10 +23,15 @@ public class Instance {
     private Long instanceId;
     private String instanceUrl;
     private String instanceName;
-    private Long port;
+    private Integer port;
     private String repoName;
     private String status;
 
+    @ManyToOne
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
+    @JoinColumn(name = "appl_id")
+    private Application application;
 
     @ManyToOne
     @LazyCollection(LazyCollectionOption.FALSE)

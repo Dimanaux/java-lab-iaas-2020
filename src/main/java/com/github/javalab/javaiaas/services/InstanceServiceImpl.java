@@ -15,6 +15,8 @@ import java.util.Optional;
 public class InstanceServiceImpl implements InstanceService {
     @Autowired
     private InstanceRepository repository;
+    @Autowired
+    private PortService portService;
     private String directory;
     private ProcessBuilder processBuilder = new ProcessBuilder();
     @Autowired
@@ -23,7 +25,7 @@ public class InstanceServiceImpl implements InstanceService {
 
     @Override
     public Instance createCopy(Instance instance) throws IOException, InterruptedException {
-        Long freePort = 0L; // get free port
+        Integer freePort = portService.getFreePorts().get(0); // get free port
         Long newId = repository.findMaxId() + 1;
         directory = instance.getRepoName();
         //need to run docker dind with github project name: ( docker run --privileged -d --name=${repoName} docker:dind)
@@ -50,7 +52,7 @@ public class InstanceServiceImpl implements InstanceService {
         p4.waitFor();
         p5.waitFor();
         Instance copyInst = new Instance(newId, newId + "/" + instance.getInstanceUrl(), instance.getInstanceName(),
-                freePort, instance.getRepoName(), "active", instance.getUser());
+                freePort, instance.getRepoName(), "active", instance.getApplication(), instance.getUser());
         repository.save(copyInst);
         return copyInst;
     }

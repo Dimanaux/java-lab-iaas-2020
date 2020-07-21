@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/applications")
@@ -31,10 +32,11 @@ public class ApplicationsController {
         return ResponseEntity.ok(currentUser(authentication).getApplications());
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<?> getInstances(Authentication authentication, @PathVariable("username") String username) {
-        return ResponseEntity.ok(instService.getAll(username));
-    }
+//    @GetMapping("/{username}")
+//    public ResponseEntity<?> getInstances(@PathVariable("username") String username) {
+//        System.out.println("kek");
+//        return ResponseEntity.ok(instService.getAll(username));
+//    }
 
     @PostMapping("/copy")
     public ResponseEntity<?> createCopy(Authentication authentication, @RequestBody Instance instance) throws IOException, InterruptedException {
@@ -54,10 +56,10 @@ public class ApplicationsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> show(Authentication authentication,
+    public ResponseEntity<?> show(
                                   @PathVariable Long id) throws NotFoundException {
-        authorize(authentication, id);
-        Application application = service.findAppById(id);
+//        authorize(authentication, id);
+        List<Application> application = service.findAppByUserId(id);
         return ResponseEntity.ok(application);
     }
 

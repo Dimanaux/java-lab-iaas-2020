@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class TokenDto {
     private String value;
     private String status;
+    private Long userId;
 }
