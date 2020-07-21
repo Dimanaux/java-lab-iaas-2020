@@ -89,9 +89,17 @@ public class ApplicationsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private void authorize(Authentication authentication, Long userId) {
-        if (!currentUser(authentication).getId().equals(userId)) {
-            throw new HttpErrors.Unauthorized();
+    private Application authorize(Authentication authentication,
+                                  Long applicationId) {
+        try {
+            Application application = service.findAppById(applicationId);
+            if (!currentUser(authentication).getId()
+                    .equals(application.getUser().getId())) {
+                throw new HttpErrors.Unauthorized();
+            }
+            return application;
+        } catch (NotFoundException e) {
+            throw new HttpErrors.NotFound();
         }
     }
 
