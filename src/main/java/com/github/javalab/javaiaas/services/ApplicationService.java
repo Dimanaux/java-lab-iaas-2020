@@ -49,6 +49,10 @@ public class ApplicationService {
             dockerImage.run();
             dockerImage.send(String.format("git clone %s app", application.getGitUrl()));
             dockerImage.send(String.format("cd app && PORT=%s docker-compose up", ports.get(0)));
+            dockerImage.subscribe(output -> {
+                String message = String.format("DEBUG<Application#%s>: %s", application.getId(), output);
+                System.out.println(message);
+            });
             return ports;
         } else {
             return emptyList();

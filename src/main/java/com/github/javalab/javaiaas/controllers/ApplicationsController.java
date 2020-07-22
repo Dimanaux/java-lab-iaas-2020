@@ -7,18 +7,13 @@ import com.github.javalab.javaiaas.models.User;
 import com.github.javalab.javaiaas.security.details.UserDetailsImpl;
 import com.github.javalab.javaiaas.services.ApplicationService;
 import com.github.javalab.javaiaas.services.InstanceService;
-import com.github.javalab.javaiaas.services.UsersService;
 import javassist.NotFoundException;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,11 +21,11 @@ import java.util.List;
 @RequestMapping("/applications")
 public class ApplicationsController {
     private final ApplicationService service;
-    @Autowired
-    private InstanceService instService;
+    private final InstanceService instService;
 
-    public ApplicationsController(ApplicationService service) {
+    public ApplicationsController(ApplicationService service, InstanceService instService) {
         this.service = service;
+        this.instService = instService;
     }
 
     @GetMapping
@@ -39,9 +34,10 @@ public class ApplicationsController {
     }
 
     @PostMapping("/new/{id}")
-    public ResponseEntity<?> newInstance(Authentication authentication, @RequestBody InstanceDTO dto){
+    public ResponseEntity<?> newInstance(Authentication authentication, @RequestBody InstanceDTO dto) {
         return ResponseEntity.ok(instService.createNew(dto));
     }
+
     @PostMapping("/copy")
     public ResponseEntity<?> createCopy(Authentication authentication, @RequestBody Instance instance) throws IOException, InterruptedException {
         return ResponseEntity.ok(instService.createCopy(instance));
@@ -60,9 +56,9 @@ public class ApplicationsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> show(Authentication authentication,
-                                  @PathVariable Long id)  {
-        List<Application> application = service.findAppByUserId(id);
+    public ResponseEntity<Application> show(Authentication authentication,
+                                            @PathVariable Long id) {
+        Application application = authorize(authentication, id);
         return ResponseEntity.ok(application);
     }
 
@@ -75,7 +71,7 @@ public class ApplicationsController {
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody ResponseEntity<?> run(Authentication authentication,
+    public ResponseEntity<?> run(Authentication authentication,
                                  @PathVariable Long id) {
         Application application = authorize(authentication, id);
         try {
@@ -94,20 +90,19 @@ public class ApplicationsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-private Application authorize(Authentication authentication,
-                              Long applicationId) {
-    try {
-        Application application = service.findAppById(applicationId);
-        if (!currentUser(authentication).getId()
-                .equals(application.getUser().getId())) {
-            throw new HttpErrors.Unauthorized();
+    private Application authorize(Authentication authentication,
+                                  Long applicationId) {
+        try {
+            Application application = service.findAppById(applicationId);
+            if (!currentUser(authentication).getId()
+                    .equals(application.getUser().getId())) {
+                throw new HttpErrors.Unauthorized();
+            }
+            return application;
+        } catch (NotFoundException e) {
+            throw new HttpErrors.NotFound();
         }
-        return application;
-    } catch (NotFoundException e) {
-        throw new HttpErrors.NotFound();
     }
-}
 
     private User currentUser(Authentication authentication) {
         return ((UserDetailsImpl) authentication.getPrincipal()).getUser();

@@ -37,4 +37,6 @@ public class Application {
     private User user;
 
     private String type;
+
+    private String log = "";
 }
