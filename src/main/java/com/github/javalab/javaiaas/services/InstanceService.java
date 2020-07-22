@@ -1,5 +1,6 @@
 package com.github.javalab.javaiaas.services;
 
+import com.github.javalab.javaiaas.dtos.InstanceDTO;
 import com.github.javalab.javaiaas.models.Instance;
 
 import java.io.IOException;
@@ -14,4 +15,6 @@ public interface InstanceService {
     void startInstance(Long id);
 
     List<Instance> getAll(String username);
+
+    Instance createNew(InstanceDTO dto);
 }
