@@ -62,7 +62,6 @@ public class ApplicationsController {
     @GetMapping("/{id}")
     public ResponseEntity<?> show(Authentication authentication,
                                   @PathVariable Long id)  {
-        authorize(authentication, id);
         List<Application> application = service.findAppByUserId(id);
         return ResponseEntity.ok(application);
     }
