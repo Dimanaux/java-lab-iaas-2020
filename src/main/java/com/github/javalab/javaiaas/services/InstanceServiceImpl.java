@@ -1,8 +1,11 @@
 package com.github.javalab.javaiaas.services;
 
+import com.github.javalab.javaiaas.dtos.InstanceDTO;
+import com.github.javalab.javaiaas.models.Application;
 import com.github.javalab.javaiaas.models.Instance;
 import com.github.javalab.javaiaas.repositories.InstanceRepository;
 import com.github.javalab.javaiaas.repositories.UsersRepository;
+import javassist.NotFoundException;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,8 @@ import java.util.Optional;
 public class InstanceServiceImpl implements InstanceService {
     @Autowired
     private InstanceRepository repository;
+    @Autowired
+    private ApplicationService applicationService;
     @Autowired
     private PortService portService;
     private String directory;
@@ -76,5 +81,20 @@ public class InstanceServiceImpl implements InstanceService {
     @Override
     public List<Instance> getAll(String username) {
         return repository.findAllByUserId(usersRepository.findByLogin(username).get().getId());
+    }
+
+    @Override
+    public Instance createNew(InstanceDTO dto) {
+        try {
+            Application app = applicationService.findAppById(dto.getAppId());
+            String rep[]=app.getGitUrl().split("/");
+            String repp=rep[rep.length-1].split(".")[0];
+            Instance inst = Instance.builder().instanceName(dto.getInstanceName()).status("active").instanceUrl(dto.getInstanceUrl())
+                    .application(app).user(app.getUser()).port(portService.allocatePorts(1).get(0)).repoName(repp).build();
+            return inst;
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.github.javalab.javaiaas.controllers;
 
+import com.github.javalab.javaiaas.dtos.InstanceDTO;
 import com.github.javalab.javaiaas.models.Application;
 import com.github.javalab.javaiaas.models.Instance;
 import com.github.javalab.javaiaas.models.User;
@@ -37,6 +38,10 @@ public class ApplicationsController {
         return ResponseEntity.ok(currentUser(authentication).getApplications());
     }
 
+    @PostMapping("/new/{id}")
+    public ResponseEntity<?> newInstance(Authentication authentication, @RequestBody InstanceDTO dto){
+        return ResponseEntity.ok(instService.createNew(dto));
+    }
     @PostMapping("/copy")
     public ResponseEntity<?> createCopy(Authentication authentication, @RequestBody Instance instance) throws IOException, InterruptedException {
         return ResponseEntity.ok(instService.createCopy(instance));
@@ -90,19 +95,7 @@ public class ApplicationsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private Application authorize(Authentication authentication,
-                                  Long applicationId) {
-        try {
-            Application application = service.findAppById(applicationId);
-            if (!currentUser(authentication).getId()
-                    .equals(application.getUser().getId())) {
-                throw new HttpErrors.Unauthorized();
-            }
-            return application;
-        } catch (NotFoundException e) {
-            throw new HttpErrors.NotFound();
-        }
-    }
+
 private Application authorize(Authentication authentication,
                               Long applicationId) {
     try {
