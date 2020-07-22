@@ -88,9 +88,10 @@ public class InstanceServiceImpl implements InstanceService {
         try {
             Application app = applicationService.findAppById(dto.getAppId());
             String rep[]=app.getGitUrl().split("/");
-            String repp=rep[rep.length-1].split(".")[0];
+            Long id=repository.findMaxId()+1L;
             Instance inst = Instance.builder().instanceName(dto.getInstanceName()).status("active").instanceUrl(dto.getInstanceUrl())
-                    .application(app).user(app.getUser()).port(portService.allocatePorts(1).get(0)).repoName(repp).build();
+                    .application(app).user(app.getUser()).port(portService.allocatePorts(1).get(0)).repoName(rep[rep.length-1]).instanceId(id).build();
+           repository.save(inst);
             return inst;
         } catch (NotFoundException e) {
             e.printStackTrace();

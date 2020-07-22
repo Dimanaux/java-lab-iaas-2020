@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface InstanceRepository extends JpaRepository<Instance, Long> {
 
-    @Query("select max(i.instanceId) from Instance i")
+    @Query("select max(instanceId) from Instance ")
     Long findMaxId();
 
 
